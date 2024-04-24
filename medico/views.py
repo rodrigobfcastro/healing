@@ -13,7 +13,7 @@ def cadastro_medico(request):
         return redirect('/medicos/abrir_horario')
     if request.method == "GET":
         especialidades = Especialidades.objects.all()
-        return render(request, 'cadastro_medico.html', {'especialidades': especialidades})
+        return render(request, 'cadastro_medico.html', {'especialidades': especialidades, 'is_medico' : is_medico(request.user)})
     elif request.method == "POST":
         crm = request.POST.get('crm')
         nome = request.POST.get('nome')
@@ -62,7 +62,7 @@ def abrir_horario(request):
     if request.method == "GET":
         dados_medicos = DadosMedico.objects.get(user=request.user)
         datas_abertas = DatasAbertas.objects.filter(user=request.user)
-        return render(request, 'abrir_horario.html', {'dados_medicos': dados_medicos,'datas_abertas' : datas_abertas})
+        return render(request, 'abrir_horario.html', {'dados_medicos': dados_medicos,'datas_abertas' : datas_abertas, 'is_medico' : is_medico(request.user)})
     elif request.method == "POST":
         data = request.POST.get('data')
 
