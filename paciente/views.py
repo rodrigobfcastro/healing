@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from medico.models import DadosMedico, Especialidades, DatasAbertas, is_medico
 from datetime import datetime
-from .models import Consulta
+from .models import Consulta, Documento
 from django.contrib import messages
 from django.contrib.messages import constants
 
@@ -56,5 +56,6 @@ def minhas_consultas(request):
 def consulta(request, id_consulta):
     if request.method == 'GET':
         consulta = Consulta.objects.get(id=id_consulta)
+        documentos = Documento.objects.filter(consulta=consulta)
         dado_medico = DadosMedico.objects.get(user=consulta.data_aberta.user)
-        return render(request, 'consulta.html', {'consulta': consulta, 'dado_medico': dado_medico, 'is_medico': is_medico(request.user)})
+        return render(request, 'consulta.html', {'consulta': consulta, 'documentos': documentos, 'dado_medico': dado_medico, 'is_medico': is_medico(request.user)})
