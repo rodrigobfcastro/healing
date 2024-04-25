@@ -9,7 +9,11 @@
   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
 />
 
-{% endblock 'head' %} {% block 'body' %}
+{% endblock 'head' %} 
+
+{% block 'body' %}
+
+{% include "partials/navbar.html"%}
 
 <div class="container">
   <br />
@@ -53,7 +57,7 @@
       <tbody>
         {% for consulta in minhas_consultas %}
         <tr>
-          <td><a href="#">Dr(a). {{consulta.data_aberta.user}}</a></td>
+          <td><a href="{% url 'consulta' consulta.id %}">Dr(a). {{consulta.data_aberta.user}}</a></td>
           <td>{{consulta.get_status_display}}</td>
           <td>{{consulta.data_aberta.data}}</td>
         </tr>
